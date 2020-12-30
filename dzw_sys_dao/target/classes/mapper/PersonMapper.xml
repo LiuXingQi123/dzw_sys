@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.accp.dao.PersonMapper" >
+  <resultMap id="BaseResultMap" type="com.accp.pojo.Person" >
+    <id column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="pname" property="pname" jdbcType="VARCHAR" />
+    <result column="psex" property="psex" jdbcType="INTEGER" />
+    <result column="pdate" property="pdate" jdbcType="DATE" />
+    <result column="pimg" property="pimg" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.accp.pojo.Person" extends="BaseResultMap" >
+    <result column="pimgdata" property="pimgdata" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pid, pname, psex, pdate, pimg
+  </sql>
+  <sql id="Blob_Column_List" >
+    pimgdata
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_person
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_person
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.accp.pojo.Person" >
+    insert into tbl_person (pid, pname, psex, 
+      pdate, pimg, pimgdata
+      )
+    values (#{pid,jdbcType=INTEGER}, #{pname,jdbcType=VARCHAR}, #{psex,jdbcType=INTEGER}, 
+      #{pdate,jdbcType=DATE}, #{pimg,jdbcType=VARCHAR}, #{pimgdata,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.accp.pojo.Person" >
+    insert into tbl_person
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="pname != null" >
+        pname,
+      </if>
+      <if test="psex != null" >
+        psex,
+      </if>
+      <if test="pdate != null" >
+        pdate,
+      </if>
+      <if test="pimg != null" >
+        pimg,
+      </if>
+      <if test="pimgdata != null" >
+        pimgdata,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="pname != null" >
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="psex != null" >
+        #{psex,jdbcType=INTEGER},
+      </if>
+      <if test="pdate != null" >
+        #{pdate,jdbcType=DATE},
+      </if>
+      <if test="pimg != null" >
+        #{pimg,jdbcType=VARCHAR},
+      </if>
+      <if test="pimgdata != null" >
+        #{pimgdata,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.accp.pojo.Person" >
+    update tbl_person
+    <set >
+      <if test="pname != null" >
+        pname = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="psex != null" >
+        psex = #{psex,jdbcType=INTEGER},
+      </if>
+      <if test="pdate != null" >
+        pdate = #{pdate,jdbcType=DATE},
+      </if>
+      <if test="pimg != null" >
+        pimg = #{pimg,jdbcType=VARCHAR},
+      </if>
+      <if test="pimgdata != null" >
+        pimgdata = #{pimgdata,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.accp.pojo.Person" >
+    update tbl_person
+    set pname = #{pname,jdbcType=VARCHAR},
+      psex = #{psex,jdbcType=INTEGER},
+      pdate = #{pdate,jdbcType=DATE},
+      pimg = #{pimg,jdbcType=VARCHAR},
+      pimgdata = #{pimgdata,jdbcType=LONGVARCHAR}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.accp.pojo.Person" >
+    update tbl_person
+    set pname = #{pname,jdbcType=VARCHAR},
+      psex = #{psex,jdbcType=INTEGER},
+      pdate = #{pdate,jdbcType=DATE},
+      pimg = #{pimg,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+</mapper>

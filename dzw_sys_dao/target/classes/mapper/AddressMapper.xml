@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.accp.dao.AddressMapper" >
+  <resultMap id="BaseResultMap" type="com.accp.pojo.Address" >
+    <id column="aid" property="aid" jdbcType="INTEGER" />
+    <result column="aname" property="aname" jdbcType="VARCHAR" />
+    <result column="atel" property="atel" jdbcType="VARCHAR" />
+    <result column="apid" property="apid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    aid, aname, atel, apid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_address
+    where aid = #{aid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_address
+    where aid = #{aid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.accp.pojo.Address" >
+    insert into tbl_address (aid, aname, atel, 
+      apid)
+    values (#{aid,jdbcType=INTEGER}, #{aname,jdbcType=VARCHAR}, #{atel,jdbcType=VARCHAR}, 
+      #{apid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.accp.pojo.Address" >
+    insert into tbl_address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aid != null" >
+        aid,
+      </if>
+      <if test="aname != null" >
+        aname,
+      </if>
+      <if test="atel != null" >
+        atel,
+      </if>
+      <if test="apid != null" >
+        apid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aid != null" >
+        #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="aname != null" >
+        #{aname,jdbcType=VARCHAR},
+      </if>
+      <if test="atel != null" >
+        #{atel,jdbcType=VARCHAR},
+      </if>
+      <if test="apid != null" >
+        #{apid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.accp.pojo.Address" >
+    update tbl_address
+    <set >
+      <if test="aname != null" >
+        aname = #{aname,jdbcType=VARCHAR},
+      </if>
+      <if test="atel != null" >
+        atel = #{atel,jdbcType=VARCHAR},
+      </if>
+      <if test="apid != null" >
+        apid = #{apid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.accp.pojo.Address" >
+    update tbl_address
+    set aname = #{aname,jdbcType=VARCHAR},
+      atel = #{atel,jdbcType=VARCHAR},
+      apid = #{apid,jdbcType=INTEGER}
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+</mapper>
